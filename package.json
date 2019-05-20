@@ -1,0 +1,23 @@
+{
+  "name": "bit-docs-tag-diff",
+  "version": "1.0.0",
+  "description": "Create a diff from two filepaths",
+  "main": "diff.js",
+  "scripts": {
+    "test": "mocha test/test.js --reporter spec",
+    "browser": "mocha test/test.js --inspect-brk"
+  },
+  "keywords": [
+    "bit-docs"
+  ],
+  "author": "Bitovi",
+  "license": "ISC",
+  "devDependencies": {
+    "bit-docs-process-tags": "0.0.6",
+    "mocha": "^6.1.4"
+  },
+  "dependencies": {
+    "diff": "^4.0.1",
+    "prettydiff": "^101.0.3"
+  }
+}
