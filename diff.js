@@ -108,7 +108,7 @@ module.exports = {
     var diffLines = diffChecker.diff(file1, file2);
     if(diffLines.length) {
       var lines = checkSequence(diffLines);
-      markdown += '\n <div line-highlight="' + lines.toString() + ',' + onlyFlag + '"></div>';
+      markdown += '\n <div line-highlight="' + lines.toString() + ',' + onlyFlag + '"></div>' + '\n';
     };
     if (useCurData) {
       curData.description += markdown;
