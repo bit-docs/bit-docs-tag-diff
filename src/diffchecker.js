@@ -1,12 +1,12 @@
 module.exports = {
   diff: function(ogString, newString) {
     var diffLines = [];
-    var ogLines = ogString.split('\n');
+    var ogLines = ogString.split('\n').map(line => line.trim());
     var ogLinesStripped = []
     for (var index = 0; index < ogLines.length; index++) {
       ogLinesStripped.push(ogLines[index].replace(/;/g, ""));
     }
-    var newLines = newString.split('\n');
+    var newLines = newString.split('\n').map(line => line.trim());
 
     for (var index = 0; index < newLines.length; index++) {
       var lineNumber = index + 1;
