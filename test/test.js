@@ -28,7 +28,7 @@ describe("diff", function(){
         }
       }
 		},function(newDoc, newScope){
-      //console.log(newDoc.body);
+      // console.log(newDoc.body);
       assert.ok(newDoc.body.indexOf('<div line-highlight="2,"></div>') >= 0);
 		});
   });
@@ -56,7 +56,7 @@ describe("diff", function(){
         }
       }
 		},function(newDoc, newScope){
-      //console.log('test 2', newDoc.body);
+      // console.log('test 2', newDoc.body);
       assert.ok(newDoc.body.indexOf('<div line-highlight="2,only"></div>') >= 0);
 		});
   });
@@ -84,8 +84,8 @@ describe("diff", function(){
         }
       }
 		},function(newDoc, newScope){
-      //console.log('test 3', newDoc.body);
-      assert.ok(newDoc.body.indexOf('<div line-highlight="3-4,79,93-122,"></div>') >= 0);
+      // console.log('test 3', newDoc.body);
+      assert.ok(newDoc.body.indexOf('<div line-highlight="3-5,80-81,93-123,"></div>') >= 0);
 		});
 	});
 
