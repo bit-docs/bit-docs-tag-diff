@@ -101,11 +101,13 @@ module.exports = {
     }
     var file1 = fs.readFileSync(files[0]).toString();
     var file2 = fs.readFileSync(files[1]).toString();
+    var {diffLines, diffFile} = diffChecker.diff(file1, file2);
+
     var validCurData = (curData && curData.length !== 2);
     var fileType = convertType(path.extname(files[1]).substring(1));
     var useCurData = useCurData ? validCurData && (typeof curData.description === "string") && !curData.body : false;;
-    var markdown = '\n```' + fileType + '\n' + file2 + '\n```';
-    var diffLines = diffChecker.diff(file1, file2);
+    var markdown = '\n```' + fileType + '\n' + diffFile.join('\n') + '\n```';
+
     if(diffLines.length) {
       var lines = checkSequence(diffLines);
       markdown += '\n <div line-highlight="' + lines.toString() + ',' + onlyFlag + '"></div>' + '\n';

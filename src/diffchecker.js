@@ -1,26 +1,45 @@
+const Diff = require('diff');
+
+function normalizeLines(str) {
+  const strWithNewLine = str.endsWith('\n') ? str : str + '\n';
+
+  return strWithNewLine.split('\n').map(line => line.replace(/\s+$/, '')).join('\n');
+}
+
 module.exports = {
   diff: function(ogString, newString) {
-    var diffLines = [];
-    var ogLines = ogString.split('\n').map(line => line.trim());
-    var ogLinesStripped = []
-    for (var index = 0; index < ogLines.length; index++) {
-      ogLinesStripped.push(ogLines[index].replace(/;/g, ""));
-    }
-    var newLines = newString.split('\n').map(line => line.trim());
+    const normalizedOgString = normalizeLines(ogString);
+    const normalizedNewString = normalizeLines(newString);
 
-    for (var index = 0; index < newLines.length; index++) {
-      var lineNumber = index + 1;
-      var newLine = newLines[index].replace(/;/g, "");
-      var newLineIndx = ogLinesStripped.indexOf(newLine);
-      if (newLine != '') {
-        if (newLineIndx === -1) {
-          diffLines.push(lineNumber);
+    const diff = Diff.diffLines(normalizedOgString, normalizedNewString);
+    const diffLines = [];
+    const diffFile = [];
+    let lineNumberNewFile = 1;
+
+    diff.forEach((part) => {
+      const lines = part.value.split('\n');
+  
+      lines.forEach((line, index) => {
+        if (index === lines.length - 1 && line === '') {
+          return;
         }
-        else {
-          ogLinesStripped.splice(newLineIndx, 1);
+
+        if (part.added) {
+          diffFile.push(`+ ${line}`)
+          diffLines.push(lineNumberNewFile);
+          lineNumberNewFile++;
+        } else if (part.removed) {
+          diffFile.push(`- ${line}`)
+          diffLines.push(lineNumberNewFile);
+
+          lineNumberNewFile++;
+        } else {
+          diffFile.push(`  ${line}`)
+          lineNumberNewFile++;
         }
-      }
-    }
-    return diffLines
+      });
+    });
+
+    return {diffLines, diffFile}
   }
 }
